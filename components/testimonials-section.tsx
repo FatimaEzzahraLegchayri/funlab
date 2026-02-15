@@ -24,24 +24,39 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground text-balance">Témoignages</h2>
-          <p className="text-lg text-muted-foreground">Ce que disent nos participants</p>
+    <section className="py-16 md:py-24 bg-muted/30">
+      <div className="container mx-auto px-6">
+        <div className="text-center space-y-3 md:space-y-4 mb-12 md:mb-16">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-foreground text-balance">
+            Témoignages
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground">
+            Ce que disent nos participants
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border-border bg-card hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6 space-y-4">
-                <Quote className="w-10 h-10 text-accent/30" />
+            <Card 
+              key={index} 
+              className={`border-border bg-card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col ${
+                index === 2 ? "sm:col-span-2 lg:col-span-1" : ""
+              }`}
+            >
+              <CardContent className="p-6 md:p-8 space-y-4 flex flex-col h-full">
+                <Quote className="w-8 h-8 md:w-10 md:h-10 text-[#AB507B]/20 shrink-0" />
 
-                <p className="text-muted-foreground leading-relaxed italic">"{testimonial.quote}"</p>
+                <p className="text-muted-foreground leading-relaxed italic text-sm md:text-base flex-grow">
+                  "{testimonial.quote}"
+                </p>
 
-                <div className="pt-4 border-t border-border">
-                  <p className="font-semibold text-foreground">{testimonial.author}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.workshop}</p>
+                <div className="pt-4 border-t border-border mt-auto">
+                  <p className="font-bold text-foreground text-base">
+                    {testimonial.author}
+                  </p>
+                  <p className="text-xs md:text-sm text-[#AB507B] font-medium">
+                    {testimonial.workshop}
+                  </p>
                 </div>
               </CardContent>
             </Card>

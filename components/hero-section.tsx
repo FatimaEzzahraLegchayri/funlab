@@ -3,9 +3,14 @@
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
+
+import { OpenStudioModal } from "@/components/modals/openStudioModal";
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     setMounted(true)
@@ -15,9 +20,7 @@ export function HeroSection() {
     <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-20">
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-          {/* Left content */}
           <div className="space-y-8 order-2 lg:order-1">
-            {/* Badge animation */}
             <div
               className={`inline-block transition-all duration-700 ${
                 mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
@@ -32,8 +35,7 @@ export function HeroSection() {
               </span>
             </div>
 
-            {/* Title with scale animation */}
-            <div className="space-y-4">
+            <div className="space-y-4 px-4">
               <p
                 className={`text-sm tracking-widest text-muted-foreground uppercase transition-all duration-700 delay-100 ${
                   mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
@@ -42,7 +44,7 @@ export function HeroSection() {
                 Bienvenue chez
               </p>
               <h1
-                className={`font-serif text-6xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight text-balance transition-all duration-1000 delay-200 ${
+                className={`font-serif text-4xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight text-balance transition-all duration-1000 delay-200 ${
                   mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
                 }`}
                 style={{
@@ -53,56 +55,47 @@ export function HeroSection() {
               </h1>
             </div>
 
-            {/* Subtitle with slide up */}
-            {/* <h2
-              className={`text-2xl md:text-3xl lg:text-4xl font-light text-foreground/90 text-balance leading-relaxed transition-all duration-1000 delay-300 ${
-                mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              }`}
-            >
-              Un espace créatif pour apprendre, créer et s'exprimer
-            </h2> */}
-
-            {/* Description */}
             <p
-              className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-500 ${
+              className={`px-4 text-lg text-justify px-2 text-muted-foreground leading-relaxed transition-all duration-1000 delay-500 ${
                 mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
               Un espace sans jugement où l'on expérimente, on se salit les mains et on repart avec une création unique. Ateliers guidés par des pros ou accès libre au studio : à vous de choisir votre aventure.
             </p>
 
-            {/* CTAs with hover effects */}
             <div
-              className={`flex flex-col sm:flex-row items-start gap-4 pt-4 transition-all duration-1000 delay-700 ${
+              className={`flex flex-col sm:flex-row items-center gap-4 pt-4 transition-all duration-1000 delay-700 ${
                 mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
+              <Link href="">
+                <Button
+                  size="lg"
+                  variant="workshop"
+                onClick={() => setIsModalOpen(true)}
+                  className="rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 hover:-translate-y-1"
+                >
+                  Réserver Open Studion
+                </Button>
+              </Link>
+              <Link href="#ateliers" scroll={true}>
               <Button
-                size="lg"
-                variant="workshop"
-                className="rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 hover:-translate-y-1"
-              >
-                Réserver Open Studio
-              </Button>
-              <Button
-                asChild
                 size="lg"
                 variant="outline"
                 className="rounded-full px-8 py-6 text-base font-medium bg-transparent border-2 hover:bg-foreground/5 hover:text-foreground hover:scale-105 transition-all duration-300 hover:-translate-y-1"
               >
-                <a href="#ateliers">Réserver un workshop</a>
+                Réserver un workshop
               </Button>
+              </Link>
             </div>
           </div>
 
-          {/* Right image */}
           <div
             className={`relative order-1 lg:order-2 transition-all duration-1000 delay-300 ${
               mounted ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
             }`}
           >
             <div className="relative">
-              {/* Decorative elements behind image */}
               <div className="absolute -top-6 -right-6 w-full h-full rounded-3xl bg-gradient-to-br from-primary/20 to-secondary/20 blur-xl animate-pulse" />
               <div
                 className="absolute -bottom-6 -left-6 w-full h-full rounded-3xl bg-gradient-to-tr from-accent/20 to-primary/20 blur-xl"
@@ -111,7 +104,6 @@ export function HeroSection() {
                 }}
               />
 
-              {/* Main image container */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-background">
                 <Image
                   src="/diverse-group-of-people-joyfully-painting-tote-bag.jpg"
@@ -122,11 +114,9 @@ export function HeroSection() {
                   priority
                 />
 
-                {/* Overlay gradient for depth */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10 mix-blend-overlay" />
               </div>
 
-              {/* Floating badge */}
               <div
                 className="absolute -bottom-4 -left-4 bg-background rounded-2xl shadow-xl p-4 border border-primary/20"
                 style={{
@@ -151,7 +141,6 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Floating badge 2 */}
               <div
                 className="absolute -top-4 -right-4 bg-background rounded-2xl shadow-xl p-4 border border-secondary/20"
                 style={{
@@ -179,19 +168,17 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-1000 delay-1000 ${mounted ? "opacity-100" : "opacity-0"}`}
+          className={`absolute bottom-25 left-1/2 -translate-x-1/2 transition-all duration-1000 delay-1000 ${mounted ? "opacity-100" : "opacity-0"}`}
         >
           <div className="flex flex-col items-center gap-2 animate-bounce">
             <p className="text-xs text-muted-foreground uppercase tracking-wider">Découvrez plus</p>
-            <svg className="w-6 h-6 text-primary" fill="none" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-6 text-primary" fill="none" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
         </div>
       </div>
-      {/* </CHANGE> */}
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
@@ -279,7 +266,6 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-      {/* </CHANGE> */}
 
       <style jsx>{`
         @keyframes float {
@@ -294,6 +280,12 @@ export function HeroSection() {
           }
         }
       `}</style>
+
+    <OpenStudioModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+    />
+
     </section>
   )
 }

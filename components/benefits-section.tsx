@@ -28,7 +28,7 @@ export function BenefitsSection() {
     <section className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground text-balance">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-foreground text-balance">
             Pourquoi Choisir The Fun Lab ?
           </h2>
         </div>
@@ -37,7 +37,7 @@ export function BenefitsSection() {
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon
             return (
-              <div key={index} className="text-center space-y-4 group">
+              <div key={index} className="text-center space-y-4 group px-5">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                   <Icon className="w-8 h-8 text-accent" />
                 </div>

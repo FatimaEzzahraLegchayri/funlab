@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   /* Updated to coral pink and purple/magenta color palette matching the reference image */
   --background: oklch(0.98 0.01 85);

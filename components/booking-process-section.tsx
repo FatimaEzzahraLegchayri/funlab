@@ -44,27 +44,34 @@ const openStudioSteps = [
 
 export function BookingProcessSection() {
   const renderSteps = (stepList: typeof atelierSteps) => (
-    <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 max-w-6xl mx-auto px-4">
       {stepList.map((step, index) => {
         const Icon = step.icon
         return (
-          <div key={index} className="relative text-center space-y-4">
-            <div className="relative inline-flex">
-              <div className="w-20 h-20 rounded-2xl bg-accent/10 flex items-center justify-center">
-                <Icon className="w-10 h-10 text-accent" />
+          <div key={index} className="relative text-center group">
+            {index < stepList.length - 1 && (
+              <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-[1px] bg-border/60 z-0" />
+            )}
+
+            <div className="flex flex-col items-center space-y-4 relative z-10">
+              <div className="relative inline-flex transition-transform duration-300 group-hover:scale-110">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-[#AB507B]/10 flex items-center justify-center">
+                  <Icon className="w-8 h-8 md:w-10 md:h-10 text-[#AB507B]" />
+                </div>
+                <div className="absolute -top-2 -right-2 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#AB507B] text-white flex items-center justify-center font-bold text-xs md:text-sm shadow-md">
+                  {step.number}
+                </div>
               </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
-                {step.number}
+
+              <div className="space-y-2">
+                <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground">
+                  {step.title}
+                </h3>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-[280px] mx-auto md:max-w-none">
+                  {step.description}
+                </p>
               </div>
             </div>
-
-            <h3 className="font-serif text-2xl font-semibold text-foreground">{step.title}</h3>
-            <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-
-            {/* Connecting Line */}
-            {index < stepList.length - 1 && (
-              <div className="hidden md:block absolute top-10 left-[65%] w-[70%] h-[1px] bg-border" />
-            )}
           </div>
         )
       })}
@@ -72,30 +79,29 @@ export function BookingProcessSection() {
   )
 
   return (
-    <section className="py-24 space-y-24">
+    <section className="py-16 md:py-24 space-y-16 md:space-y-24 bg-white/50">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+        <div className="text-center mb-12 md:mb-20">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-foreground mb-4">
             Comment Ça Marche
           </h2>
+          <div className="w-20 h-1 bg-[#AB507B]/20 mx-auto rounded-full" />
         </div>
 
-        {/* Ateliers Flow */}
-        <div className="space-y-12">
-          <p className="text-center text-lg font-medium text-muted-foreground uppercase tracking-widest">
-            — Pour les ateliers —
+        <div className="space-y-10">
+          <p className="text-center text-xs md:text-sm font-bold text-[#AB507B] uppercase tracking-[0.3em]">
+            Pour les ateliers
           </p>
           {renderSteps(atelierSteps)}
         </div>
 
-        {/* Divider */}
-        <div className="max-w-xs mx-auto border-t border-border/50 pt-12" />
+        <div className="max-w-xs mx-auto py-12 md:py-16">
+          <div className="border-t border-border/60" />
+        </div>
 
-        {/* Open Studio Flow */}
-        <div className="space-y-12">
-          <p className="text-center text-lg font-medium text-muted-foreground uppercase tracking-widest">
-            — Pour l'Open Studio —
+        <div className="space-y-10">
+          <p className="text-center text-xs md:text-sm font-bold text-[#AB507B] uppercase tracking-[0.3em]">
+            Pour l&apos;Open Studio
           </p>
           {renderSteps(openStudioSteps)}
         </div>
