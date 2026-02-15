@@ -169,13 +169,15 @@ export function OpenStudioModal({ isOpen, onClose }: OpenStudioModalProps) {
       } else {
         const missingActivity = people.some(p => !p.activity)
         const missingCustom = people.some(p => p.activity === 'Other' && !p.customActivity.trim())
-        
+        const missingAge = people.some(p => !p.ageGroup);
+
+        if (missingAge) errors.push("Âge manquant pour un participant"); 
         if (missingActivity) errors.push("Activité manquante pour un participant")
         if (missingCustom) errors.push("Précisez l'activité 'Autre'")
       }
 
     return { isValid: errors.length === 0, firstError: errors[0] }
-  }, [formData, remainingSlots, config])
+  }, [formData, remainingSlots, config, people])
 
   // SYNC PEOPLE ARRAY
   useEffect(() => {
