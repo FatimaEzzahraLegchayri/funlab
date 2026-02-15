@@ -160,6 +160,20 @@ export function OpenStudioModal({ isOpen, onClose }: OpenStudioModalProps) {
     if (!formData.startTime || !formData.endTime) errors.push("Horaire non défini")
     if (!formData.paymentProof) errors.push("Preuve de paiement requise")
   
+      if (formData.allSameActivity === 'yes' || count === 1) {
+        if (!formData.globalActivity) {
+          errors.push("Veuillez choisir une activité")
+        } else if (formData.globalActivity === 'Other' && !formData.globalCustomActivity.trim()) {
+          errors.push("Précisez l'activité personnalisée")
+        }
+      } else {
+        const missingActivity = people.some(p => !p.activity)
+        const missingCustom = people.some(p => p.activity === 'Other' && !p.customActivity.trim())
+        
+        if (missingActivity) errors.push("Activité manquante pour un participant")
+        if (missingCustom) errors.push("Précisez l'activité 'Autre'")
+      }
+
     return { isValid: errors.length === 0, firstError: errors[0] }
   }, [formData, remainingSlots, config])
 
@@ -317,29 +331,6 @@ return (
                 />
               </div>
 
-              {/* Participant Count */}
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 font-bold">
-                  <Users size={14} className="text-[#B35D89]" /> Participants
-                </Label>
-                <Input
-                  type="number"
-                  min="1"
-                  max={remainingSlots !== null ? remainingSlots : config?.maxCapacityPerSlot || 10}
-                  value={formData.personCount}
-                  onChange={(e) => handleChange('personCount', e.target.value)}
-                  disabled={isValidating || remainingSlots === 0}
-                  className="rounded-xl border-[#EBE3DE] bg-white h-11"
-                  required
-                />
-                {remainingSlots !== null && !isValidating && (
-                  <p className={`text-[10px] italic px-1 ${remainingSlots === 0 ? 'text-red-500 font-bold' : 'text-gray-400'}`}>
-                    {remainingSlots === 0 ? "Complet" : `${remainingSlots} places dispos`}
-                  </p>
-                )}
-                {isValidating && <p className="text-[10px] text-gray-400 animate-pulse">Vérification...</p>}
-              </div>
-
               {/* Time Slots - Grid inside grid for responsiveness */}
               <div className="md:col-span-2 space-y-2">
                 <Label className="flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 font-bold">
@@ -363,6 +354,30 @@ return (
                   </Select>
                 </div>
               </div>
+
+              {/* Participant Count */}
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 font-bold">
+                  <Users size={14} className="text-[#B35D89]" /> Participants
+                </Label>
+                <Input
+                  type="number"
+                  min="1"
+                  max={remainingSlots !== null ? remainingSlots : config?.maxCapacityPerSlot || 10}
+                  value={formData.personCount}
+                  onChange={(e) => handleChange('personCount', e.target.value)}
+                  disabled={isValidating || remainingSlots === 0}
+                  className="rounded-xl border-[#EBE3DE] bg-white h-11"
+                  required
+                />
+                {remainingSlots !== null && !isValidating && (
+                  <p className={`text-[10px] italic px-1 ${remainingSlots === 0 ? 'text-red-500 font-bold' : 'text-gray-400'}`}>
+                    {remainingSlots === 0 ? "Complet" : `${remainingSlots} places dispos`}
+                  </p>
+                )}
+                {isValidating && <p className="text-[10px] text-gray-400 animate-pulse">Vérification...</p>}
+              </div>
+
             </div>
 
             {/* Global Activity Box */}
@@ -387,7 +402,7 @@ return (
                   <Label className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Activité choisie</Label>
                   <Select value={formData.globalActivity} onValueChange={(val) => handleChange('globalActivity', val)}>
                     <SelectTrigger className="rounded-xl border-[#EBE3DE] bg-white h-11">
-                      <SelectValue placeholder="Sélectionner une activité" />
+                      <SelectValue placeholder="Sélectionner une activité *" />
                     </SelectTrigger>
                     <SelectContent className="rounded-xl border-[#EBE3DE]">
                       {ACTIVITIES.map(act => <SelectItem key={act} value={act}>{act}</SelectItem>)}
@@ -448,7 +463,7 @@ return (
                               onValueChange={(val) => handlePersonChange(index, 'activity', val)}
                             >
                               <SelectTrigger className="w-full rounded-xl border-[#EBE3DE] bg-white h-10">
-                                <SelectValue placeholder="Activité spécifique" />
+                                <SelectValue placeholder="Activité spécifique *" />
                               </SelectTrigger>
                               <SelectContent className="rounded-xl border-[#EBE3DE]">
                                 {ACTIVITIES.map(act => <SelectItem key={act} value={act}>{act}</SelectItem>)}
