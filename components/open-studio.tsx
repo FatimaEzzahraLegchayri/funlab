@@ -45,7 +45,7 @@ export function OpenStudio() {
                 className="w-full sm:w-auto text-white px-10 py-7 md:py-8 rounded-full uppercase tracking-widest font-bold text-xs md:text-sm transition-all hover:scale-105 active:scale-95 shadow-lg shadow-[#E66E68]/20"
                 variant="workshop"
               >
-                Réserver Open Studio
+                Réserver Atelier privé
               </Button>
             </div>
           </div>
@@ -56,7 +56,7 @@ export function OpenStudio() {
             <div className="relative w-full max-w-[320px] md:max-w-[450px] aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl rotate-1 lg:rotate-2 transition-transform hover:rotate-0 duration-700">
               <img 
                 src="/diverse-group-of-people-joyfully-painting-tote-bag.jpg" 
-                alt="Open Studio FunLab"
+                alt="Atelier privé FunLab"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/5 pointer-events-none" />

@@ -51,7 +51,7 @@ export default function SettingsPage() {
           <Settings size={24} />
         </div>
         <div>
-          <h1 className="text-2xl font-serif text-gray-900">Paramètres Open Studio</h1>
+          <h1 className="text-2xl font-serif text-gray-900">Paramètres Atelier privé</h1>
           <p className="text-sm text-gray-500">Configurez les règles de réservation</p>
         </div>
       </div>

@@ -101,7 +101,7 @@ export function BookingProcessSection() {
 
         <div className="space-y-10">
           <p className="text-center text-xs md:text-sm font-bold text-[#AB507B] uppercase tracking-[0.3em]">
-            Pour l&apos;Open Studio
+            Pour l&apos;Atelier privé
           </p>
           {renderSteps(openStudioSteps)}
         </div>

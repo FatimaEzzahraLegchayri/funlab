@@ -3,7 +3,7 @@ import { MapPin, Instagram, MessageCircle, Clock } from "lucide-react"
 import Link from "next/link"
 
 export function ContactSection() {
-  const whatsappMsg = encodeURIComponent("Bonjour The Fun Lab ! Je souhaite avoir des informations sur open studio.")
+  const whatsappMsg = encodeURIComponent("Bonjour The Fun Lab ! Je souhaite avoir des informations sur Atelier privé.")
   
   return (
     <section id="contact" className="py-16 md:py-24 bg-background">
@@ -21,7 +21,6 @@ export function ContactSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
             
-            {/* Left Column: Info */}
             <div className="space-y-8 md:space-y-10 text-center md:text-left">
               <div className="space-y-4">
                 <h3 className="font-serif text-2xl font-semibold text-foreground flex items-center justify-center md:justify-start gap-2">
@@ -52,7 +51,6 @@ export function ContactSection() {
               </div>
             </div>
 
-            {/* Right Column: Socials/CTA */}
             <div className="space-y-6 flex flex-col items-center md:items-start">
               <h3 className="font-serif text-2xl font-semibold text-foreground text-center md:text-left">
                 Suivez-Nous

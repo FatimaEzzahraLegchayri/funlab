@@ -75,7 +75,7 @@ export function HeroSection() {
                 onClick={() => setIsModalOpen(true)}
                   className="rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 hover:-translate-y-1"
                 >
-                  Réserver Open Studion
+                  Réserver Atelier privé
                 </Button>
               </Link>
               <Link href="#ateliers" scroll={true}>

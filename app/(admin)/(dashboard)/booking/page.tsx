@@ -32,7 +32,7 @@ export default function BookingPage() {
                   className="cursor-pointer py-2.5 text-sm md:text-base data-[state=active]:text-[#b3668a]" 
                   value="open-studio"
                 >
-                  Open Studio
+                  Atelier privé
                 </TabsTrigger>
               </TabsList>
             </div>

@@ -17,7 +17,7 @@ export function Navigation() {
 
   const navLinks = [
     { href: "#ateliers", label: "Ateliers" },
-    { href: "#open-studio", label: "Open Studio" },
+    { href: "#open-studio", label: "Atelier privé" },
     { href: "#contact", label: "Contact" },
   ]
 
@@ -41,7 +41,6 @@ export function Navigation() {
                 className="text-[13px] uppercase tracking-[0.1em] font-medium text-muted-foreground hover:text-foreground transition-all duration-300 relative group"
               >
                 {link.label}
-                {/* Underline animation */}
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-foreground transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
@@ -57,7 +56,6 @@ export function Navigation() {
           </Link>
         </div>
 
-        {/* Mobile Navigation Trigger */}
         <div className="md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>

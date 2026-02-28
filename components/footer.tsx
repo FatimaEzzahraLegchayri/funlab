@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Instagram, MessageCircle } from "lucide-react"
 
 export function Footer() {
-  const whatsappMsg = encodeURIComponent("Bonjour The Fun Lab ! Je souhaite avoir des informations sur open studio.")
+  const whatsappMsg = encodeURIComponent("Bonjour The Fun Lab ! Je souhaite avoir des informations sur Atelier privé.")
 
   return (
     <footer className="border-t border-border bg-card">

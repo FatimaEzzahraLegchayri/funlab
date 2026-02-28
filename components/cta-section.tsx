@@ -32,7 +32,7 @@ export function CtaSection() {
             onClick={() => setIsModalOpen(true)}
             className="w-full sm:w-auto min-h-[56px] px-8 shadow-lg shadow-[#AB507B]/20 rounded-full text-sm md:text-base font-bold uppercase tracking-widest transition-transform hover:scale-105 active:scale-95"
           >
-            Réserver Open Studio
+            Réserver Atelier privé
           </Button>
 
           <Link href="#ateliers" scroll={true} className="w-full sm:w-auto">
