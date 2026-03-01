@@ -141,7 +141,21 @@ export function WorkshopTable() {
                   </a>
                 </TableCell>
                 <TableCell className="text-xs text-muted-foreground">
-                  {booking.createdAt ? format(new Date(booking.createdAt), 'dd/MM/yyyy HH:mm') : 'N/A'}
+                  {booking.createdAt ? (
+                    (() => {
+                      try {
+                        const date = booking.createdAt?.toDate 
+                          ? booking.createdAt.toDate() 
+                          : new Date(booking.createdAt);
+                          
+                        return isNaN(date.getTime()) 
+                          ? 'Date invalide' 
+                          : format(date, 'dd/MM/yyyy HH:mm');
+                      } catch (e) {
+                        return 'Format erroné';
+                      }
+                    })()
+                  ) : 'N/A'}
                 </TableCell>
               </TableRow>
             ))}

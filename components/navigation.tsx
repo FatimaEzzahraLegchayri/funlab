@@ -80,7 +80,7 @@ export function Navigation() {
             >
               <SheetHeader className="p-6 border-b border-border/10 flex flex-row items-center justify-between">
                 <SheetTitle className="text-left">
-                   <Image src="/logo.png" alt="Logo" width={100} height={30} className="h-6 w-auto" />
+                   <Image src="/logo.PNG" alt="Logo" width={100} height={30} className="h-6 w-auto" />
                 </SheetTitle>
               </SheetHeader>
 
