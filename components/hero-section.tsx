@@ -35,23 +35,24 @@ export function HeroSection() {
               </span>
             </div>
 
-            <div className="space-y-4 px-4">
+            <div className="space-y-3 px-4 max-w-4xl">
               <p
-                className={`text-sm tracking-widest text-muted-foreground uppercase transition-all duration-700 delay-100 ${
+                className={`text-[10px] md:text-xs tracking-[0.4em] text-[#AB507B] font-bold uppercase transition-all duration-700 delay-100 ${
                   mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                 }`}
               >
-                Bienvenue chez
+                Bienvenue au
               </p>
+              
               <h1
-                className={`font-serif text-4xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight text-balance transition-all duration-1000 delay-200 ${
+                className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.15] text-balance transition-all duration-1000 delay-200 ${
                   mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
                 }`}
                 style={{
-                  textShadow: "0 2px 40px rgba(0,0,0,0.05)",
+                  textShadow: "0 1px 20px rgba(0,0,0,0.03)",
                 }}
               >
-                The Fun Lab
+                The Fun Lab — ton espace créatif
               </h1>
             </div>
 
@@ -60,7 +61,14 @@ export function HeroSection() {
                 mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
-              Un espace sans jugement où l'on expérimente, on se salit les mains et on repart avec une création unique. Ateliers guidés par des pros ou accès libre au studio : à vous de choisir votre aventure.
+              Un espace accueillant pour créer, s’inspirer et partager… et surtout passer de bons moments.
+            </p>
+            <p
+              className={`px-4 text-lg text-justify px-2 text-muted-foreground leading-relaxed transition-all duration-1000 delay-500 ${
+                mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+            >
+              Au Fun Lab, on se sent immédiatement à sa place, entouré de bonne énergie et prêt à laisser libre cours à sa créativité.
             </p>
 
             <div
@@ -75,7 +83,7 @@ export function HeroSection() {
                 onClick={() => setIsModalOpen(true)}
                   className="rounded-full px-8 py-6 text-base font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 hover:-translate-y-1"
                 >
-                  Réserver Atelier privé
+                  Réserver un atelier privé
                 </Button>
               </Link>
               <Link href="#ateliers" scroll={true}>
@@ -84,7 +92,7 @@ export function HeroSection() {
                 variant="outline"
                 className="rounded-full px-8 py-6 text-base font-medium bg-transparent border-2 hover:bg-foreground/5 hover:text-foreground hover:scale-105 transition-all duration-300 hover:-translate-y-1"
               >
-                Réserver un workshop
+                Découvrir les ateliers guidés
               </Button>
               </Link>
             </div>

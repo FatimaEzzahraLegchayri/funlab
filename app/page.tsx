@@ -10,6 +10,8 @@ import { Navigation } from "@/components/navigation"
 import { OpenStudio } from "@/components/open-studio"
 import { OwnerSection } from "@/components/owner-section"
 import { CtaSection } from "@/components/cta-section"
+import PrivateEvents from "@/components/PrivateEvents"
+import SpaceRental from "@/components/SpaceRental"
 
 export default function HomePage() {
   return (
@@ -19,14 +21,13 @@ export default function HomePage() {
         <HeroSection />
         <BenefitsSection />
         <OpenStudio />
-        <WorkshopsSection />
         <BookingProcessSection />
+        <PrivateEvents />
+        <SpaceRental />
         <OwnerSection />
-        {/* <AboutSection /> */}
         <TestimonialsSection />
         <CtaSection />
         <ContactSection /> 
-        {/* add contact pge */}
       </main>
       <Footer />
     </div>

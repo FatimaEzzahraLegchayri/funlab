@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { MapPin, Instagram, MessageCircle, Clock } from "lucide-react"
+import { MapPin, Instagram,Phone, MessageCircle, Clock } from "lucide-react"
 import Link from "next/link"
 
 export function ContactSection() {
@@ -15,7 +15,7 @@ export function ContactSection() {
               Nous Contacter
             </h2>
             <p className="text-base md:text-lg text-muted-foreground">
-              Venez nous rendre visite ou contactez-nous
+              Venez nous rendre visite ou contactez-nous  — nous serons ravis de vous accueillir !
             </p>
           </div>
 
@@ -24,13 +24,18 @@ export function ContactSection() {
             <div className="space-y-8 md:space-y-10 text-center md:text-left">
               <div className="space-y-4">
                 <h3 className="font-serif text-2xl font-semibold text-foreground flex items-center justify-center md:justify-start gap-2">
-                  Notre Atelier
+                Adresse
                 </h3>
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-3 text-muted-foreground group">
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-3 text-gray-600 group">
+  
                   <MapPin className="w-5 h-5 text-[#AB507B] shrink-0 transition-transform group-hover:bounce" />
                   <p className="leading-relaxed text-sm md:text-base">
-                    Californie, Casablanca, Maroc
+                  Résidence Assakan Al Mounaouar, Lotissement Raouia, Californie, Casablanca, Maroc. 
+                  <Button variant="link" className="text-[#AB507B] p-0 h-auto text-xs font-bold" asChild>
+                    <a href='https://maps.app.goo.gl/kT4AePRLmxERpvm57?g_st=ic' target="_blank">  Voir sur Google Maps →</a>
+                  </Button>
                   </p>
+                 
                 </div>
               </div>
 
@@ -41,11 +46,19 @@ export function ContactSection() {
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-3 text-muted-foreground">
                   <Clock className="w-5 h-5 text-[#AB507B] shrink-0 hidden md:block" />
                   <p className="text-sm md:text-base leading-relaxed">
-                    <span className="font-medium text-foreground">Mardi - Samedi:</span> 10h00 - 19h00
-                    <br />
-                    <span className="font-medium text-foreground">Dimanche:</span> 14h00 - 18h00
-                    <br />
-                    <span className="text-[#AB507B]/70 italic">Fermé le lundi</span>
+                    <span className="font-medium text-foreground">Tous les jours:</span>  09h00 - 21h00
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-semibold text-foreground flex items-center justify-center md:justify-start gap-2">
+                  Téléphone / WhatsApp
+                </h3>
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-3 text-muted-foreground">
+                  <Phone className="w-5 h-5 text-[#AB507B] shrink-0 hidden md:block" />
+                  <p className="text-sm md:text-base leading-relaxed">
+                    +212 7 15 29 23 79
                   </p>
                 </div>
               </div>

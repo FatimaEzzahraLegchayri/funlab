@@ -266,6 +266,16 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
         </div>
       )}
 
+      <div className="flex items-start gap-3 p-4 rounded-2xl bg-amber-50/50 border border-amber-100/50">
+        <div className="mt-0.5">
+          <AlertCircle size={16} className="text-amber-600" />
+        </div>
+        <p className="text-xs leading-relaxed text-amber-800">
+          <span className="font-bold uppercase text-[10px] block mb-0.5">Note importante</span>
+          Votre réservation sera <span className="underline decoration-amber-300">validée définitivement</span> une fois le paiement effectué et vérifié.
+        </p>
+      </div>
+
       <Button 
         onClick={handleNext} 
         disabled={isValidating} 

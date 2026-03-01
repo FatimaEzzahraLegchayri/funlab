@@ -1,4 +1,5 @@
 import { Search, Calendar, Palette, ClipboardEdit, MousePointerClick, Sparkles } from "lucide-react"
+import { WorkshopsSection } from "./workshops-section"
 
 const atelierSteps = [
   {
@@ -31,14 +32,14 @@ const openStudioSteps = [
   {
     icon: MousePointerClick,
     number: "02",
-    title: "Choisissez l'activité",
-    description: "Sélectionnez votre projet créatif parmi nos options",
+    title: "Choisissez votre projet",
+    description: "Sélectionnez l’activité créative que vous souhaitez réaliser",
   },
   {
     icon: Sparkles,
     number: "03",
-    title: "Venez vous amuser",
-    description: "Profitez de l'espace et du matériel pour créer en toute liberté",
+    title: "Venez créer",
+    description: "Profitez de l’espace et du matériel pour vivre votre moment créatif à votre rythme",
   },
 ]
 
@@ -50,24 +51,24 @@ export function BookingProcessSection() {
         return (
           <div key={index} className="relative text-center group">
             {index < stepList.length - 1 && (
-              <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-[1px] bg-border/60 z-0" />
+              <div className="hidden md:block absolute top-10 left-[65%] w-[70%] h-[1px] bg-[#AB507B]/20 z-0" />
             )}
 
             <div className="flex flex-col items-center space-y-4 relative z-10">
-              <div className="relative inline-flex transition-transform duration-300 group-hover:scale-110">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-[#AB507B]/10 flex items-center justify-center">
-                  <Icon className="w-8 h-8 md:w-10 md:h-10 text-[#AB507B]" />
+              <div className="relative inline-flex transition-all duration-500 group-hover:scale-105">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-[2rem] bg-white border border-[#AB507B]/10 shadow-sm flex items-center justify-center">
+                  <Icon className="w-8 h-8 md:w-9 md:h-9 text-[#AB507B]" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#AB507B] text-white flex items-center justify-center font-bold text-xs md:text-sm shadow-md">
+                <div className="absolute -top-1 -right-1 w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#AB507B] text-white flex items-center justify-center font-bold text-xs md:text-sm shadow-lg shadow-[#AB507B]/20">
                   {step.number}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground">
+                <h3 className="font-serif text-xl font-semibold text-foreground">
                   {step.title}
                 </h3>
-                <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-[280px] mx-auto md:max-w-none">
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-[240px] mx-auto md:max-w-none">
                   {step.description}
                 </p>
               </div>
@@ -79,32 +80,46 @@ export function BookingProcessSection() {
   )
 
   return (
-    <section className="py-16 md:py-24 space-y-16 md:space-y-24 bg-white/50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12 md:mb-20">
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Comment Ça Marche
-          </h2>
-          <div className="w-20 h-1 bg-[#AB507B]/20 mx-auto rounded-full" />
+    <section className="py-20 md:py-32 bg-[#FDFBF9]">
+      <div className="container mx-auto px-6">
+        
+
+        <div className="space-y-12">
+          <div className="text-center mb-10">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Comment ca marche ?
+            </h2>
+          </div>
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-[1px] w-12 bg-[#AB507B]/30" />
+            <p className="text-center text-[10px] md:text-xs font-bold text-[#AB507B] uppercase tracking-[0.4em]">
+              Pour les Ateliers Privés
+            </p>
+            <div className="h-[1px] w-12 bg-[#AB507B]/30" />
+          </div>
+          {renderSteps(openStudioSteps)}
         </div>
 
-        <div className="space-y-10">
-          <p className="text-center text-xs md:text-sm font-bold text-[#AB507B] uppercase tracking-[0.3em]">
-            Pour les ateliers
-          </p>
+        <div className="py-6 md:py-10">
+        <WorkshopsSection />
+        </div>
+
+        <div className="space-y-12">
+          <div className="text-center mb-10">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Comment ca marche ?
+            </h2>
+          </div>
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-[1px] w-12 bg-[#AB507B]/30" />
+            <p className="text-center text-[10px] md:text-xs font-bold text-[#AB507B] uppercase tracking-[0.4em]">
+            Pour les ateliers guidés
+            </p>
+            <div className="h-[1px] w-12 bg-[#AB507B]/30" />
+          </div>
           {renderSteps(atelierSteps)}
         </div>
 
-        <div className="max-w-xs mx-auto py-12 md:py-16">
-          <div className="border-t border-border/60" />
-        </div>
-
-        <div className="space-y-10">
-          <p className="text-center text-xs md:text-sm font-bold text-[#AB507B] uppercase tracking-[0.3em]">
-            Pour l&apos;Atelier privé
-          </p>
-          {renderSteps(openStudioSteps)}
-        </div>
       </div>
     </section>
   )

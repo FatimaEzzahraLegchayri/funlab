@@ -11,59 +11,72 @@ export function OpenStudio() {
     <section id="open-studio" className="relative w-full bg-[#EBE3DE] py-16 md:py-24 lg:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+  
+        <div className="flex flex-col order-2 lg:order-1 text-center lg:text-left">
           
-          <div className="flex flex-col order-2 lg:order-1 text-center lg:text-left">
-            
-            <div className="mb-6 md:mb-8">
-              <span className="text-[#E66E68] uppercase tracking-[0.2em] text-xs md:text-sm font-bold mb-3 md:mb-4 block">
-                Un espace de liberté
-              </span>
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-7xl font-bold text-foreground tracking-tight leading-[1.1] text-balance">
-                LIBERTÉ DE <br className="hidden md:block" /> 
-                <span className="font-medium italic lg:not-italic">CRÉATION</span>
-              </h2>
-            </div>
-
-            <div className="space-y-6 md:space-y-8 mb-10 md:mb-12">
-              <p className="text-[#666666] text-base md:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Un espace ouvert aux individus, aux familles et aux amis. 
-                Créez ensemble ou seul, avec un coup de pouce si besoin. 
-                Session limitée à 10 personnes pour une ambiance sereine et conviviale.
-              </p>
-
-              <p className="text-[#666666] text-sm md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0 opacity-80">
-                Safe space pour l'expression artistique : nous vous accompagnons dans la 
-                réalisation de vos idées les plus audacieuses, du concept à la création finale.
-              </p>
-            </div>
-
-            <div className="flex justify-center lg:justify-start">
-              <Button 
-                onClick={() => setIsModalOpen(true)}
-                size="lg"
-                className="w-full sm:w-auto text-white px-10 py-7 md:py-8 rounded-full uppercase tracking-widest font-bold text-xs md:text-sm transition-all hover:scale-105 active:scale-95 shadow-lg shadow-[#E66E68]/20"
-                variant="workshop"
-              >
-                Réserver Atelier privé
-              </Button>
-            </div>
+          <div className="mb-8 md:mb-10">
+            <span className="text-[#AB507B] uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block opacity-80">
+              Un espace de liberté
+            </span>
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.1] text-balance">
+              Ateliers 
+              <span className="italic font-medium text-[#AB507B]"> privés</span>
+            </h2>
           </div>
 
-          <div className="relative flex justify-center lg:justify-end order-1 lg:order-2 mb-4 lg:mb-0">
-            <div className="absolute -z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-[#F2EAE5] rounded-full opacity-60 blur-2xl lg:blur-3xl" />
+          <div className="space-y-6 mb-10 md:mb-12">
+            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+            Découvrez une expérience créative unique et sur mesure à Casablanca, dans un cadre chaleureux et convivial. 
+            Seul(e), en famille ou entre amis, chacun est le bienvenu, petits et grands. Choisis ton projet et profites d’un moment agréable, adapté à tes envies.
+
             
-            <div className="relative w-full max-w-[320px] md:max-w-[450px] aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl rotate-1 lg:rotate-2 transition-transform hover:rotate-0 duration-700">
-              <img 
-                src="/diverse-group-of-people-joyfully-painting-tote-bag.jpg" 
-                alt="Atelier privé FunLab"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/5 pointer-events-none" />
-            </div>
+            </p>
+
+            <div className="h-[1px] w-12 bg-[#AB507B]/30 mx-auto lg:mx-0" />
+
+            <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0 opacity-70 italic font-serif">
+            Je suis toujours là pour t’accompagner, t’encourager et m’assurer que tu passes un moment mémorable. 
+            </p>
           </div>
 
+          <div className="flex justify-center lg:justify-start">
+            <Button 
+              onClick={() => setIsModalOpen(true)}
+              size="lg"
+              className="w-full sm:w-auto bg-[#AB507B] hover:bg-[#913d64] text-white px-12 py-7 rounded-full uppercase tracking-[0.15em] font-bold text-[10px] md:text-xs transition-all hover:translate-y-[-2px] shadow-xl shadow-[#AB507B]/20"
+            >
+              Réserver un atelier privé
+            </Button>
+          </div>
         </div>
+
+        <div className="relative flex justify-center lg:justify-end order-1 lg:order-2 mb-8 lg:mb-0">
+          <div className="absolute -z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#AB507B]/5 rounded-full blur-3xl" />
+          
+          <div className="relative w-full max-w-[340px] md:max-w-[480px] group">
+            <div className="absolute inset-0 border border-[#AB507B]/20 translate-x-4 translate-y-4 rounded-2xl -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2 duration-500" />
+            
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-white p-3">
+              <div className="relative w-full h-full overflow-hidden rounded-xl">
+                <img 
+                  src="/diverse-group-of-people-joyfully-painting-tote-bag.jpg" 
+                  alt="Atelier privé FunLab"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-[#AB507B]/5 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+            </div>
+
+            <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl border border-[#F2EAE5] hidden md:block animate-in fade-in slide-in-from-left-4 duration-1000">
+              <p className="text-[10px] font-bold text-[#AB507B] uppercase tracking-widest">Capacité</p>
+              <p className="text-sm font-serif italic text-foreground">Max 10 participants</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       </div>
 
       <OpenStudioModal

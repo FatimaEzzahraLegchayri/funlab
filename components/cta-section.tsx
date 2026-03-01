@@ -16,12 +16,11 @@ export function CtaSection() {
       <div className="relative z-10 mx-auto max-w-4xl text-center space-y-10 md:space-y-12">
         <div className="space-y-6">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif text-[#AB507B] leading-[1.15] text-balance">
-            Prêt à Explorer <br className="hidden sm:block" /> Votre Créativité ?
+          Envie de créer, de vous détendre et de vivre un moment différent ?
           </h2>
           
           <p className="text-base md:text-xl text-zinc-600 leading-relaxed max-w-2xl mx-auto text-pretty">
-            Rejoignez-nous pour une expérience créative qui transformera votre vision de l'art. 
-            Aucune compétence requise, juste votre envie d'explorer.
+          Pas besoin d’être artiste — juste l’envie de passer un bon moment et de laisser libre cours à votre créativité.
           </p>
         </div>
 
@@ -32,7 +31,7 @@ export function CtaSection() {
             onClick={() => setIsModalOpen(true)}
             className="w-full sm:w-auto min-h-[56px] px-8 shadow-lg shadow-[#AB507B]/20 rounded-full text-sm md:text-base font-bold uppercase tracking-widest transition-transform hover:scale-105 active:scale-95"
           >
-            Réserver Atelier privé
+            Réserver un atelier privé
           </Button>
 
           <Link href="#ateliers" scroll={true} className="w-full sm:w-auto">
@@ -41,7 +40,7 @@ export function CtaSection() {
               size="lg"
               className="w-full sm:w-auto min-h-[56px] border-2 border-[#AB507B] text-[#AB507B] hover:bg-[#AB507B]/5 hover:text-[#AB507B] rounded-full uppercase tracking-widest text-xs md:text-sm font-bold px-10 transition-all hover:scale-105 active:scale-95"
             >
-              Réserver un workshop
+               Voir les prochains ateliers
             </Button>
           </Link>
         </div>

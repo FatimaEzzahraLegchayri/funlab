@@ -50,11 +50,27 @@ export function WorkshopsSection() {
   return (
     <section id="ateliers" className="py-24 z-21">
       <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground text-balance">Nos Ateliers</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Des expériences créatives uniques pour tous les niveaux
-          </p>
+
+        <div className="text-center space-y-6 mb-16 px-4">
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-balance tracking-tight">
+            Ateliers guidés
+          </h2>
+
+          <div className="space-y-4 max-w-3xl mx-auto">
+            <p className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed font-light">
+              Le Fun Lab organise occasionnellement des ateliers guidés pour te faire découvrir de 
+              <span className="text-foreground/80 font-medium"> nouvelles techniques créatives.</span>
+            </p>
+
+            <p className="text-xs md:text-sm lg:text-base text-muted-foreground/80 leading-relaxed italic max-w-2xl mx-auto">
+              Parfois autour d’un thème, parfois pour une occasion spéciale — chaque atelier est unique, 
+              pensé avec soin… et toujours animé avec le sourire.
+            </p>
+          </div>
+
+          <div className="flex justify-center pt-2">
+            <div className="w-8 h-[1px] bg-[#AB507B]/30" />
+          </div>
         </div>
 
         {loading ? (

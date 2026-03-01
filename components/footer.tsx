@@ -14,7 +14,7 @@ export function Footer() {
               The Fun Lab
             </h3>
             <p className="text-sm md:text-base text-muted-foreground italic max-w-[250px] md:max-w-none">
-              Créer, apprendre, s'épanouir ensemble
+            Free your creativity
             </p>
           </div>
 

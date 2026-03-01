@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 import {
   Sheet,
   SheetContent,
@@ -16,9 +17,11 @@ export function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   const navLinks = [
-    { href: "#ateliers", label: "Ateliers" },
-    { href: "#open-studio", label: "Atelier privé" },
-    { href: "#contact", label: "Contact" },
+    { href: "/#open-studio", label: "Atelier privé" },
+    { href: "/#ateliers", label: "Ateliers guidés" },
+    { href: "/#private-events", label: "événement privé" },
+    { href: "/#space-rental", label: "location d'éspace" },
+    { href: "/#contact", label: "Contact" },
   ]
 
   return (
@@ -29,7 +32,14 @@ export function Navigation() {
           href="/" 
           className="font-serif text-2xl tracking-tight font-bold text-foreground hover:opacity-80 transition-opacity"
         >
-          The Fun Lab
+          <Image 
+            src="/logo.png" 
+            alt="The Fun Lab Logo"
+            width={150} 
+            height={40} 
+            className="h-8 md:h-10 lg:h-16 w-auto object-contain" 
+            priority 
+          />
         </Link>
 
         <div className="hidden md:flex items-center gap-12">
@@ -57,48 +67,52 @@ export function Navigation() {
         </div>
 
         <div className="md:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="hover:bg-transparent">
-                <Menu className="h-8 w-8 stroke-[1.5]" />
+                <Menu className="h-7 w-7 text-[#AB507B]" />
               </Button>
             </SheetTrigger>
             
             <SheetContent 
               side="right" 
-              className="w-[87%] sm:w-[400px] bg-background/95 backdrop-blur-2xl border-l border-border/40 flex flex-col p-0"
+              className="w-[80%] sm:w-[350px] bg-background border-l border-border/40 flex flex-col p-0"
             >
-              <SheetHeader className="p-8 border-b border-border/20">
-                <div className="flex items-center justify-between">
-                  <SheetTitle className="font-serif text-2xl tracking-tight">The Fun Lab</SheetTitle>
-                </div>
+              <SheetHeader className="p-6 border-b border-border/10 flex flex-row items-center justify-between">
+                <SheetTitle className="text-left">
+                   <Image src="/logo.png" alt="Logo" width={100} height={30} className="h-6 w-auto" />
+                </SheetTitle>
               </SheetHeader>
 
-              <div className="flex flex-col flex-1 px-8 py-12 gap-8">
-                {navLinks.map((link, index) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="text-3xl font-serif tracking-tight text-foreground/80 hover:text-foreground transition-colors"
-                    style={{ transitionDelay: `${index * 50}ms` }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <div className="flex flex-col flex-1 px-8 py-10">
+                <div className="space-y-6">
+                  {navLinks.map((link, index) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-[11px] uppercase tracking-[0.25em] font-bold text-muted-foreground hover:text-[#AB507B] transition-colors border-b border-border/5 pb-4"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
                 
                 <div className="mt-auto pb-10">
+                  <Link href="#ateliers">
                   <Button 
                     variant="workshop" 
-                    className="w-full py-8 text-lg rounded-2xl"
+                    className="w-full py-7 text-xs font-bold uppercase tracking-widest rounded-xl shadow-lg shadow-[#AB507B]/10"
                     onClick={() => setIsOpen(false)}
                   >
-                    Réserver
+                    Réserver un créneau
                   </Button>
+                  </Link>
                 </div>
               </div>
             </SheetContent>
           </Sheet>
+      
         </div>
       </div>
     </nav>
