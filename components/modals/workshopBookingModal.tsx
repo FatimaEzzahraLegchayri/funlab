@@ -1,223 +1,147 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Calendar, Clock, CheckCircle2, Upload, Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-
-import { newWorkshopBooking } from "@/lib/service/bookingService";
-
-interface Workshop {
-  id: string; 
-  title: string;
-  date: string;
-  time: string;
-  price: string;
-  spots: number;
-}
-
-interface WorkshopBookingModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  workshop: Workshop | null;
-}
+import React, { useState, useEffect } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { WorkshopStep1 } from "./WorkshopStep1";
+import { WorkshopStep2 } from "./WorkshopStep2";
+import { StepIndicator } from "./StepIndicator";
+import { Button } from "../ui/button";
+import { Check } from "lucide-react";
 
 export function WorkshopBookingModal({ isOpen, onClose, workshop }: WorkshopBookingModalProps) {
+
+  const [formData, setFormData] = useState(() => {
+    if (typeof window !== "undefined" && workshop) {
+      const saved = localStorage.getItem(`workshop_draft_${workshop.id}`);
+      if (saved) {
+        return JSON.parse(saved).savedData;
+      }
+    }
+    return { name: "", email: "", phone: "", count: 1 };
+  });
+
+  const [currentStep, setCurrentStep] = useState(() => {
+    if (typeof window !== "undefined" && workshop) {
+      const saved = localStorage.getItem(`workshop_draft_${workshop.id}`);
+      if (saved) {
+        return JSON.parse(saved).step || 1;
+      }
+    }
+    return 1;
+  });
+
+  const [bookingId, setBookingId] = useState<string | null>(() => {
+    if (typeof window !== "undefined" && workshop) {
+      const saved = localStorage.getItem(`workshop_draft_${workshop.id}`);
+      if (saved) {
+        return JSON.parse(saved).id || null;
+      }
+    }
+    return null;
+  });
+
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
-  
-  const [count, setCount] = useState(1);
-  const [phone, setPhone] = useState("");
-  const [file, setFile] = useState<File | null>(null);
 
-  if (!workshop) return null;
+  const handleStep1Success = (id: string) => {
+    setBookingId(id);
+    setCurrentStep(2);
+    
+    localStorage.setItem(`workshop_draft_${workshop!.id}`, JSON.stringify({ 
+      id, 
+      step: 2, 
+      savedData: formData 
+    }));
+  };
 
-  const unitPrice = parseInt(workshop.price);
-  const totalPrice = unitPrice * count;
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  
-    if (!file) {
-      alert("Veuillez uploader votre preuve de paiement.");
-      return;
-    }
-  
-    setLoading(true);
-  
-    try {
-      const form = e.currentTarget;
-      
-      const bookingData = {
-        workshopId: workshop.id, 
-        name: (form.elements.namedItem("name") as HTMLInputElement).value,
-        email: (form.elements.namedItem("email") as HTMLInputElement).value,
-        phone: phone,
-        count: count,
-        paymentImage: file, 
-      };
-  
-      await newWorkshopBooking(bookingData);
-
-      toast({
-        title: "Réservation envoyée !",
-        description: "C'est confirmé ! Préparez-vous à passer un moment créatif et fun avec nous.",
-        variant: "default", 
-      });
-
-      onClose();
-
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Erreur de réservation",
-        description: error.message || "Une erreur est survenue. Veuillez réessayer.",
-      });
-    } finally {
-      setLoading(false);
-    }
+  const handleStep2Success = () => {
+    localStorage.removeItem(`workshop_draft_${workshop!.id}`);
+    setIsSubmitted(true);
   };
 
   const handleClose = () => {
     onClose();
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setCount(1);
-      setPhone("");
-      setFile(null);
-    }, 300);
+    if (isSubmitted) {
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setCurrentStep(1);
+        setBookingId(null);
+        setFormData({ name: "", email: "", phone: "", count: 1 });
+      }, 300);
+    }
   };
+
+  if (!workshop) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      {/* Structural match to your "good" modal for perfect mobile scrolling */}
-      <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-[1.5rem] sm:rounded-[2rem] border-[#EBE3DE] bg-[#FDFBF9] p-0">
+      <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[92vh] overflow-y-auto rounded-[2rem] border-[#EBE3DE] bg-[#FDFBF9] p-0 outline-none">
+        
+        <div className="pt-8 pb-4 px-8 border-b border-[#EBE3DE] sticky top-0 z-20 bg-[#FDFBF9]">
+          <StepIndicator currentStep={isSubmitted ? 3 : currentStep} />
+          {!isSubmitted && (
+            <h2 className="font-serif text-xl text-center text-foreground mt-2">
+              {workshop.title}
+            </h2>
+          )}
+        </div>
+        
         {!isSubmitted ? (
-          <>
-            {/* Header section - matched padding to your good modal logic */}
-            <div className="p-6 sm:p-8 bg-accent/5 flex items-center justify-center border-b border-[#EBE3DE] sticky top-0 z-20 bg-[#FDFBF9]">
-              <div className="text-center">
-                <DialogTitle className="font-serif text-2xl md:text-3xl text-foreground">
-                  {workshop.title}
-                </DialogTitle>
-              </div>
-            </div>
-  
-            <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
-              <div className="flex justify-between items-center bg-white border border-[#EBE3DE] p-4 rounded-2xl text-sm">
-                <div className="flex items-center gap-2 font-medium text-gray-600">
-                  <Calendar className="w-4 h-4 text-[#B35D89]" /> {workshop.date}
-                </div>
-                <div className="flex items-center gap-2 font-medium text-gray-600">
-                  <Clock className="w-4 h-4 text-[#B35D89]" /> {workshop.time}
-                </div>
-              </div>
-  
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Nom complet</Label>
-                  <Input name="name" required placeholder="Votre nom" className="rounded-xl border-[#EBE3DE] bg-white h-11" />
-                </div>
-  
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Téléphone</Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">+212</span>
-                    <Input 
-                      required 
-                      type="tel"
-                      placeholder="612345678" 
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 9))}
-                      className="pl-14 rounded-xl border-[#EBE3DE] bg-white h-11" 
-                    />
-                  </div>
-                </div>
-              </div>
-  
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Nombre de places</Label>
-                  <Input 
-                    type="number" 
-                    min={1} 
-                    max={workshop.spots} 
-                    value={count}
-                    onChange={(e) => setCount(parseInt(e.target.value) || 1)}
-                    className="rounded-xl border-[#EBE3DE] bg-white h-11"
-                  />
-                </div>
-  
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Email</Label>
-                  <Input name="email" required type="email" placeholder="Email" className="rounded-xl border-[#EBE3DE] bg-white h-11" />
-                </div>
-              </div>
-  
-              <div className="space-y-2">
-                <Label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Preuve de paiement (Image)</Label>
-                <div className="relative group">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    required
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  />
-                  <div className="border-2 border-dashed border-[#EBE3DE] bg-white rounded-2xl p-4 flex items-center justify-center gap-3 group-hover:border-[#B35D89]/50 transition-colors">
-                    <Upload className="w-5 h-5 text-gray-400 group-hover:text-[#B35D89]" />
-                    <span className="text-sm text-gray-500 truncate max-w-[200px]">
-                      {file ? file.name : "Uploader le reçu"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-  
-              {/* Buttons stack vertically on mobile (reverse) to keep "Annuler" at bottom */}
-              <div className="pt-4 flex flex-col-reverse sm:flex-row gap-3">
-                <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleClose}
-                    disabled={loading}
-                    className="w-full sm:flex-1 rounded-full h-12 text-gray-500 border-[#EBE3DE]"
-                >
-                    Annuler
-                </Button>
-                <Button 
-                    type="submit" 
-                    disabled={loading}
-                    className="w-full sm:flex-[2] bg-[#B35D89] hover:bg-[#9a5574] text-white rounded-full h-12 text-lg font-bold shadow-md transition-all active:scale-[0.98]"
-                >
-                    {loading ? <Loader2 className="animate-spin" /> : `Réserver`}
-                </Button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <div className="p-8 sm:p-12 text-center space-y-6 animate-in fade-in zoom-in duration-500">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-green-500" />
-            </div>
-            <div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">Merci !</h3>
-              <p className="text-gray-500 mt-2 text-sm sm:text-base leading-relaxed">
-                Votre demande pour <span className="text-foreground font-semibold">{count} personne(s)</span> est en cours de validation.
-              </p>
-            </div>
-            <Button onClick={handleClose} variant="outline" className="rounded-full px-10 h-11 border-[#EBE3DE]">Fermer</Button>
+          <div className="animate-in fade-in duration-300">
+            {currentStep === 1 ? (
+              <WorkshopStep1 
+                workshop={workshop} 
+                formData={formData}        
+                setFormData={setFormData}  
+                onSuccess={handleStep1Success} 
+                onCancel={handleClose}
+                existingBookingId={bookingId}
+              />
+            ) : (
+              <WorkshopStep2 
+                workshop={workshop} 
+                bookingId={bookingId!} 
+                onSuccess={handleStep2Success}
+                onBack={() => {
+                  setCurrentStep(1);
+                  localStorage.setItem(`workshop_draft_${workshop.id}`, JSON.stringify({ 
+                    id: bookingId, 
+                    step: 1, 
+                    savedData: formData 
+                  }));
+                }}
+              />
+            )}
           </div>
+        ) : (
+          <div className="p-10 text-center space-y-6 animate-in zoom-in-95 duration-500">
+
+    <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-200">
+        <Check size={28} strokeWidth={3} />
+      </div>
+    </div>
+
+    <div className="space-y-3">
+      <h3 className="font-serif text-2xl font-bold text-gray-800">
+        C'est tout bon !
+      </h3>
+      <p className="text-gray-500 text-sm leading-relaxed max-w-[280px] mx-auto">
+        Merci <span className="text-[#B35D89] font-bold">{formData.name}</span>, 
+        votre demande de réservation a été envoyée.
+      </p>
+    </div>
+
+    <div className="pt-4">
+      <Button 
+        onClick={handleClose}
+        className="px-8 bg-[#B35D89] hover:bg-[#9a5574] text-white rounded-full h-12 font-bold transition-all"
+      >
+        Fermer la fenêtre
+      </Button>
+    </div>
+  </div>
         )}
       </DialogContent>
     </Dialog>
   );
-
 }
