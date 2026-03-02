@@ -50,7 +50,7 @@ export function WorkshopTable() {
   }, [])
 
   const handleStatusChange = async (bookingId: string, newStatus: Booking['status']) => {
-    // Optimistic update
+
     const previousBookings = [...bookings]
     setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: newStatus } : b))
 
@@ -74,6 +74,7 @@ export function WorkshopTable() {
     switch (status) {
       case 'confirmed': return 'bg-green-100 text-green-700 border-green-300'
       case 'canceled': return 'bg-red-100 text-red-700 border-red-300'
+      case 'draft': return 'bg-amber-100 text-amber-700 border-amber-300';
       default: return 'bg-white text-gray-800 border-gray-300'
     }
   }
@@ -118,6 +119,7 @@ export function WorkshopTable() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
+                    <SelectItem className="cursor-pointer" value="draft">Brouilant</SelectItem>
                       <SelectItem className="cursor-pointer" value="pending">En attente</SelectItem>
                       <SelectItem className="cursor-pointer" value="confirmed">Confirmé</SelectItem>
                       <SelectItem className="cursor-pointer" value="canceled">Annulé</SelectItem>

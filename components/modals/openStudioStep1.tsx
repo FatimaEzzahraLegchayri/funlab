@@ -50,20 +50,26 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
         return keys.length > 0 ? errors[keys[0]] : null;
     }, [errors]);
 
+
     const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = parseInt(e.target.value);
-        const maxAllowed = remainingSlots !== null ? remainingSlots : (config?.maxCapacityPerSlot || 10);
+      const rawValue = e.target.value;
+      const maxAllowed = remainingSlots !== null ? remainingSlots : (config?.maxCapacityPerSlot || 10);
     
-        if (value > maxAllowed) {
-          value = maxAllowed;
-        }
+      if (rawValue === "") {
+        handleChange('personCount', ""); 
+        return;
+      }
     
-        if (isNaN(value) || value < 1) {
-          handleChange('personCount', '1');
-        } else {
-          handleChange('personCount', value.toString());
-        }
-    }
+      let value = parseInt(rawValue);
+      if (isNaN(value)) return;
+    
+      if (value > maxAllowed) {
+        value = maxAllowed;
+      }
+      
+      if (value < 0) value = 0;
+      handleChange('personCount', value.toString());
+    };
     const totalPrice = useMemo(() => (parseInt(formData.personCount) || 0) * PRICE_PER_PERSON, [formData.personCount])
 
   const timeSlots = useMemo(() => {
@@ -130,9 +136,10 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
 
         <div className="space-y-2">
           <Label className="text-[10px] font-bold uppercase text-gray-500 flex gap-2"><Users size={14} className="text-[#B35D89]"/> Participants</Label>
-          <Input type="number" min="1" 
+          <Input type="number"  
           max={remainingSlots !== null ? remainingSlots : (config?.maxCapacityPerSlot || 10)}
-          value={formData.personCount} 
+          value={formData.personCount}
+          inputMode="numeric" 
           onChange={handleCountChange}
           className="rounded-xl border-[#EBE3DE] bg-white h-11" />
           {remainingSlots !== null && <p className="text-[10px] italic text-gray-400 px-1">{remainingSlots} places disponibles</p>}
