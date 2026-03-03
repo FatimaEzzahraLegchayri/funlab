@@ -95,7 +95,7 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
 
   return (
     <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-right-4 duration-300">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-full overflow-x-hidden">
 
         <div className="space-y-2">
         <Label className={`text-[10px] font-bold uppercase flex gap-2 ${errors.date ? 'text-red-500' : 'text-gray-500'}`}>
@@ -146,7 +146,7 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
         </div>
       </div>
 
-      <div className={`p-4 bg-white border rounded-2xl space-y-4 shadow-sm transition-colors ${errors.activity ? 'border-red-500 ring-1 ring-red-500' : 'border-[#EBE3DE]'}`}>
+      <div className={`p-4 bg-white border rounded-2xl space-y-4 shadow-sm transition-colors min-w-0 overflow-hidden ${errors.activity ? 'border-red-500 ring-1 ring-red-500' : 'border-[#EBE3DE]'}`}>
         {parseInt(formData.personCount) > 1 && (
           <div className="flex items-center justify-between">
             <Label className="text-xs italic text-gray-600">Même activité pour tous ?</Label>
@@ -160,8 +160,8 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
         )}
 
         {(formData.allSameActivity === 'yes' || parseInt(formData.personCount) === 1) && (
-          <div className="space-y-4">
-            <div className="space-y-2">
+          <div className="space-y-4 min-w-0">
+            <div className="space-y-2 min-w-0">
             <Label className={`text-[10px] uppercase font-bold ${errors.globalActivity ? 'text-red-500' : 'text-gray-400'}`}>Activité choisie</Label>
               <Select 
                     value={formData.globalActivity} 
@@ -169,9 +169,14 @@ export function Step1({ formData, handleChange, config, remainingSlots, isValida
                         handleChange('globalActivity', v);
                         setErrors({});
                     }}>
-                <SelectTrigger className={`rounded-xl h-auto min-h-[44px] py-2 text-left ${errors.globalActivity ? 'border-red-500 ring-1 ring-red-500' : 'border-[#EBE3DE]'}`}>
-                        <SelectValue placeholder="Sélectionner une activité *" />
-                </SelectTrigger>
+                
+              <SelectTrigger className={`w-full max-w-full rounded-xl h-auto min-h-[44px] py-2 text-left ${errors.globalActivity ? 'border-red-500 ring-1 ring-red-500' : 'border-[#EBE3DE]'}`}>
+                  <div className="flex-1 min-w-0 pr-4"> 
+                    <div className="whitespace-normal break-words leading-tight">
+                      <SelectValue placeholder="Sélectionner une activité *" />
+                    </div>
+                  </div>
+              </SelectTrigger>
                 <SelectContent className="max-w-[calc(100vw-40px)] sm:max-w-md">
                     {ACTIVITIES.map(act => <SelectItem key={act} value={act}
                     className="whitespace-normal py-3 leading-snug">{act}</SelectItem>)}

@@ -60,12 +60,12 @@ export function WorkshopTable() {
         title: "Statut mis à jour",
         description: `La réservation est maintenant : ${newStatus}`,
       })
-    } catch (err) {
+    } catch (err: any) {
       setBookings(previousBookings)
       toast({
         variant: "destructive",
-        title: "Erreur",
-        description: "Échec de la mise à jour du statut.",
+        title: "Action impossible",
+        description: err instanceof Error ? err.message : "Une erreur imprévue est survenue.",
       })
     }
   }

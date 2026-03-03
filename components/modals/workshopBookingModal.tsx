@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import React, { useState, useEffect, useRef } from "react";
+import { Dialog, DialogContent , DialogTitle, DialogDescription} from "@/components/ui/dialog";
 import { WorkshopStep1 } from "./WorkshopStep1";
 import { WorkshopStep2 } from "./WorkshopStep2";
 import { StepIndicator } from "./StepIndicator";
@@ -41,6 +41,36 @@ export function WorkshopBookingModal({ isOpen, onClose, workshop }: WorkshopBook
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const isClosingRef = useRef(false);
+
+  const hasPushedState = useRef(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      if (!hasPushedState.current) {
+        window.history.pushState({ modal: "workshop" }, "");
+        hasPushedState.current = true;
+      }
+  
+      const handlePopState = (event: PopStateEvent) => {
+        hasPushedState.current = false; 
+        onClose();
+      };
+  
+      window.addEventListener("popstate", handlePopState);
+  
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    } else {
+      if (hasPushedState.current) {
+        hasPushedState.current = false;
+        if (window.history.state?.modal === "workshop") {
+          window.history.back();
+        }
+      }
+    }
+  }, [isOpen, onClose]);
 
   const handleStep1Success = (id: string) => {
     setBookingId(id);
@@ -72,10 +102,16 @@ export function WorkshopBookingModal({ isOpen, onClose, workshop }: WorkshopBook
 
   if (!workshop) return null;
 
+ 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[92vh] overflow-y-auto rounded-[2rem] border-[#EBE3DE] bg-[#FDFBF9] p-0 outline-none">
-        
+        <DialogTitle className="sr-only">
+          Réservation d'atelier: {workshop.title}
+        </DialogTitle>
+        <DialogDescription className="sr-only">
+          Remplissez le formulaire pour réserver votre place à l'atelier.
+        </DialogDescription>
         <div className="pt-8 pb-4 px-8 border-b border-[#EBE3DE] sticky top-0 z-20 bg-[#FDFBF9]">
           <StepIndicator currentStep={isSubmitted ? 3 : currentStep} />
           {!isSubmitted && (

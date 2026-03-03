@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { AlertCircle, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -98,6 +98,38 @@ export function OpenStudioModal({ isOpen, onClose }: OpenStudioModalProps) {
       }
     }
   }, [isOpen, isSuccess])
+
+const hasPushedState = useRef(false);
+useEffect(() => {
+  if (isOpen) {
+    if (!hasPushedState.current) {
+      window.history.pushState({ modal: "open-studio", step: step }, "");
+      hasPushedState.current = true;
+    }
+
+    window.history.replaceState({ modal: "open-studio", step: step }, "");
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (step === 2) {
+        setStep(1);
+        window.history.pushState({ modal: "open-studio", step: 1 }, "");
+      } else {
+        hasPushedState.current = false;
+        handleModalClose();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  } else {
+    if (hasPushedState.current) {
+      hasPushedState.current = false;
+      if (window.history.state?.modal === "open-studio") {
+        window.history.back();
+      }
+    }
+  }
+}, [isOpen, step]); 
 
   const handleStep1Complete = async () => {
 

@@ -15,13 +15,13 @@ interface Step1Props {
     name: string;
     email: string;
     phone: string;
-    count: number;
+    count: number | string;
   };
   setFormData: React.Dispatch<React.SetStateAction<{
     name: string;
     email: string;
     phone: string;
-    count: number;
+    count: number | string;
   }>>;
   onSuccess: (id: string) => void;
   onCancel: () => void;
@@ -40,6 +40,16 @@ export function WorkshopStep1({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const phoneRegex = /^(06|07)\d{8}$/;
+  
+    if (!phoneRegex.test(formData.phone)) {
+      toast({
+        variant: "destructive",
+        title: "Numéro invalide",
+        description: "Veuillez entrer un numéro valide (ex: 0612345678).",
+      });
+      return; 
+    }
     setLoading(true);
 
     try {
@@ -53,6 +63,7 @@ export function WorkshopStep1({
       } else {
         result = await createWorkshopBookingDraft({ 
           ...formData, 
+          count: typeof formData.count === 'string' ? parseInt(formData.count) || 1 : formData.count,
           workshopId: workshop.id 
         });
       }
@@ -109,8 +120,14 @@ export function WorkshopStep1({
               <Input 
                 required 
                 type="tel"
+                inputMode="numeric"
                 value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "" || /^\d+$/.test(val)) {
+                    setFormData({...formData, phone: val});
+                  }
+                }}
                 placeholder="06..." 
                 className="rounded-xl border-[#EBE3DE] h-11 bg-white focus:ring-[#B35D89]" 
               />
@@ -123,13 +140,35 @@ export function WorkshopStep1({
             </Label>
             <Input 
               type="number"
-              min={1}
-              max={workshop.spots}
+              inputMode="numeric"
               required
+              max={workshop.spots}
               value={formData.count}
               onChange={(e) => {
-                const val = parseInt(e.target.value);
-                setFormData({ ...formData, count: isNaN(val) ? 1 : val });
+                const rawValue = e.target.value;
+                const maxAllowed = workshop.spots;
+          
+                // 1. Allow the user to delete the '1' (sets state to empty string)
+                if (rawValue === "") {
+                  setFormData({ ...formData, count: "" as any }); 
+                  return;
+                }
+          
+                // 2. Parse and validate
+                let value = parseInt(rawValue);
+                if (isNaN(value)) return;
+          
+                // 3. Apply constraints
+                if (value > maxAllowed) value = maxAllowed;
+                if (value < 0) value = 0;
+          
+                setFormData({ ...formData, count: value });
+              }}
+              onBlur={() => {
+                const currentCount = Number(formData.count);
+                if (isNaN(currentCount) || currentCount < 1) {
+                  setFormData({ ...formData, count: 1 });
+                }
               }}
               className="rounded-xl border-[#EBE3DE] h-11 bg-white focus:ring-[#B35D89]" 
             />

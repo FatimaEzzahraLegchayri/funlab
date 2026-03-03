@@ -21,6 +21,15 @@ import { getOpenStudioBookings, updateOpenStudioStatus } from '@/lib/service/boo
 import { PaginationHelper } from '@/components/admin/paginationHelper'
 import { toast } from '@/hooks/use-toast'
 
+interface BookingType {
+  id: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  personCount: number;
+  status: string;
+}
+
 export function OpenStudioTable() {
   const [bookings, setBookings] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -47,17 +56,31 @@ export function OpenStudioTable() {
     }
   }
 
-  const handleStatusChange = async (bookingId: string, newStatus: string) => {
-    const prev = [...bookings]
-    setBookings(prev.map(b => b.id === bookingId ? { ...b, status: newStatus } : b))
+  const handleStatusChange = async (booking: BookingType, newStatus: string) => {
+    const prevBookings = [...bookings];
+
+    setBookings(prev => prev.map(b => 
+      b.id === booking.id ? { ...b, status: newStatus } : b
+    ));
+
     try {
-      await updateOpenStudioStatus(bookingId, newStatus)
-      toast({ title: "Succès", description: "Statut mis à jour" })
-    } catch (err) {
-      setBookings(prev)
-      toast({ variant: "destructive", title: "Erreur", description: "Mise à jour échouée" })
+      const result = await updateOpenStudioStatus(booking, newStatus);
+
+      if (!result.success) {
+        throw new Error(result.error); 
+      }
+
+      toast({ title: "Succès", description: "Statut mis à jour avec succès." });
+      
+    } catch (err: any) {
+      setBookings(prevBookings);
+      toast({ 
+        variant: "destructive", 
+        title: "Erreur de mise à jour", 
+        description: err.message || "Une erreur est survenue" 
+      });
     }
-  }
+};
 
   const getStatusClasses = (status: string) => {
     switch (status) {
@@ -119,7 +142,7 @@ export function OpenStudioTable() {
                   <TableCell onClick={(e) => e.stopPropagation()}>
                     <Select
                       value={booking.status || 'pending'}
-                      onValueChange={(val) => handleStatusChange(booking.id, val)}
+                      onValueChange={(val) => handleStatusChange(booking, val)}
                     >
                       <SelectTrigger className={`w-[120px] h-8 text-xs cursor-pointer ${getStatusClasses(booking.status)}`}>
                         <SelectValue />
