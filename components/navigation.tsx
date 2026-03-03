@@ -33,7 +33,7 @@ export function Navigation() {
           className="font-serif text-2xl tracking-tight font-bold text-foreground hover:opacity-80 transition-opacity"
         >
           <Image 
-            src="/logo.png" 
+            src="/logo.PNG" 
             alt="The Fun Lab Logo"
             width={150} 
             height={40} 
